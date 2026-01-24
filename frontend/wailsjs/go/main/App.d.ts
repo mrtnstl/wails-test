@@ -7,3 +7,5 @@ export function AddTestCase(arg1:main.TestCase):Promise<main.TestCase>;
 export function ClearTestCases():Promise<void>;
 
 export function GetTestCases():Promise<Array<main.TestCase>>;
+
+export function MakeRequest(arg1:string,arg2:string,arg3:Record<string, string>,arg4:Record<string, any>,arg5:Record<string, any>):Promise<string>;

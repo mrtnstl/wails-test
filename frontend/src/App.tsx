@@ -1,23 +1,30 @@
 import { useState } from 'react';
 import './App.css';
-import { AddTestCase, GetTestCases, ClearTestCases } from "../wailsjs/go/main/App";
+import { AddTestCase, GetTestCases, ClearTestCases, MakeRequest } from "../wailsjs/go/main/App";
 import type { main } from '../wailsjs/go/models';
 
 function App() {
     const [testCases, setTestCases] = useState<main.TestCase[]>([]);
     const [testData, setTestData] = useState<main.TestCase>({
-        Id: 0,
+        Headers: {},
+        Body: {},
+        QueryParams: {},
+        APIResponse: null,
         Method: "",
-        Url: ""
+        Url: "",
+        Id: 0
     });
+    const [testResultLog, setTestResultLog] = useState<{ts: Date, result: string}[]>([]);
     const [resultText, setResultText] = useState("URL to test");
 
     function updateURLInput(e: any){
         setTestData({...testData, [e.target.name]: e.target.value});
     }
+
     async function handleSetTestCase(){
         try{
             const result = await AddTestCase(testData);
+            console.log(testData)
             setResultText(`${result.Url}\t${result.Method}`);
             await handleGetTestCases();
         } catch(err){
@@ -33,12 +40,38 @@ function App() {
             console.log(err)
         }
     }
+
     async function handleClearTestCases(){
         await ClearTestCases();
         await handleGetTestCases();
+        setTestResultLog([]);
+        setTestData({
+            Headers: {},
+            Body: {},
+            QueryParams: {},
+            APIResponse: null,
+            Method: "",
+            Url: "",
+            Id: 0
+        });
+        setResultText("tests cleared");
     }
+    
     async function handleRunTests(){
-
+        try{
+            const result = await MakeRequest(
+                testData.Url,
+                testData.Method,
+                {"Content-Type": "application/json"},
+                {"username": "JohnDoe"},
+                {"sort": "desc"}
+            );
+            setTestResultLog([{ts: new Date(), result: result}, ...testResultLog]);
+            console.log(result)
+        } catch(err){
+            setTestResultLog([{ts: new Date(), result: err.toString()}, ...testResultLog]);
+            console.log(err)
+        }
     }
 
     return (
@@ -57,16 +90,19 @@ function App() {
                     <h2 className="sectionTitle">test settings</h2>
                     <div id="result">{resultText}</div>
                     <div id="input" className="input-box">
-                        <input id="name" className="input" onChange={updateURLInput} autoComplete="off" name="url" type="text"/>
-                        <input id="url" className="input" onChange={updateURLInput} autoComplete="off" name="method" type="text"/>
+                        <input id="name" className="input" value={testData.Url} onChange={updateURLInput} autoComplete="off" name="Url" type="text"/>
+                        <input id="url" className="input" value={testData.Method} onChange={updateURLInput} autoComplete="off" name="Method" type="text"/>
                         <button className="btn" onClick={handleSetTestCase}>set url</button>
-                        <button className="btn" onClick={handleRunTests}>run</button>
-                        <button className="btn" onClick={handleClearTestCases}>clear</button>
+                        <button className="btn" onClick={handleRunTests}>quick run</button>
+                        <button className="btn" onClick={handleClearTestCases}>clear all</button>
                     </div>
                     <div id="testCasesView">
                     {testCases.length > 0 ? (
-                        testCases.map((testCase, index) => (
-                        <p className="testCasesViewItem" key={index}>{testCase.Id}: {testCase.Url}<br/>{testCase.Method}</p>
+                        testCases.map( testCase => (
+                        <span className="testCasesViewItem" key={testCase.Id}>
+                            {testCase.Id}: {testCase.Url}<br/>{testCase.Method}
+                            <button onClick={console.log}>exec</button>
+                        </span>
                         ))
                     ) : (
                         <p>No test cases yet</p>
@@ -76,15 +112,12 @@ function App() {
                 <div id="testResultWrapper" className="sectionBase">
                     <h2 className="sectionTitle">test result</h2>
                     <div id="testResult">
-                        <p className="testResP">- GET  /</p>
-                        <p className="testResP">&nbsp;&nbsp;&nbsp;&nbsp;OK</p>
-                        <p className="testResP">- POST  /auth/register</p>
-                        <p className="testResP">&nbsp;&nbsp;&nbsp;&nbsp;OK</p>
-                        <p className="testResP">- POST  /auth/login</p>
-                        <p className="testResP">&nbsp;&nbsp;&nbsp;&nbsp;OK</p>
-                        <p className="testResP">- POST  /posts</p>
-                        <p className="testResP">&nbsp;&nbsp;&nbsp;&nbsp;OK</p>
-
+                        {testResultLog.length > 0 ? 
+                        (testResultLog.map((row, index) =>(
+                            <p key={index} className="testResP">{row.ts.toLocaleTimeString()}: {row.result}</p>
+                        )))
+                            : <p>No results found</p>
+                        }
                     </div>
                 </div>
             </div>

@@ -1,9 +1,13 @@
 export namespace main {
 	
 	export class TestCase {
-	    Id: number;
+	    Headers: Record<string, string>;
+	    Body: Record<string, any>;
+	    QueryParams: Record<string, any>;
+	    APIResponse: any;
 	    Method: string;
 	    Url: string;
+	    Id: number;
 	
 	    static createFrom(source: any = {}) {
 	        return new TestCase(source);
@@ -11,9 +15,13 @@ export namespace main {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.Id = source["Id"];
+	        this.Headers = source["Headers"];
+	        this.Body = source["Body"];
+	        this.QueryParams = source["QueryParams"];
+	        this.APIResponse = source["APIResponse"];
 	        this.Method = source["Method"];
 	        this.Url = source["Url"];
+	        this.Id = source["Id"];
 	    }
 	}
 

@@ -13,3 +13,7 @@ export function ClearTestCases() {
 export function GetTestCases() {
   return window['go']['main']['App']['GetTestCases']();
 }
+
+export function MakeRequest(arg1, arg2, arg3, arg4, arg5) {
+  return window['go']['main']['App']['MakeRequest'](arg1, arg2, arg3, arg4, arg5);
+}
