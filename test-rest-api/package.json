@@ -1,0 +1,16 @@
+{
+  "name": "test-rest-api",
+  "version": "1.0.0",
+  "main": "api.js",
+  "type": "module",
+  "scripts": {
+    "start": "node api.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

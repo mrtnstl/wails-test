@@ -7,7 +7,3 @@ export function AddTestCase(arg1:main.TestCase):Promise<main.TestCase>;
 export function ClearTestCases():Promise<void>;
 
 export function GetTestCases():Promise<Array<main.TestCase>>;
-
-export function Greet(arg1:string):Promise<string>;
-
-export function SetURL(arg1:string):Promise<string>;
