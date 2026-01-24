@@ -1,0 +1,118 @@
+#App {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.input-box .btn {
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 3px;
+    border: none;
+    margin: 0 0 0 20px;
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.input-box .btn:hover {
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    color: #333333;
+}
+
+.input-box .input {
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    background-color: rgba(240, 240, 240, 1);
+    -webkit-font-smoothing: antialiased;
+}
+
+.input-box .input:hover {
+    border: none;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.input-box .input:focus {
+    border: none;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/*  wrappers shared  */
+.sectionBase {
+    padding: 24px;
+}
+
+/*  wrappers  */
+#projectsWrapper {
+    opacity: .1;
+    border: 1px solid rgba(255, 0, 0, 0.341);
+
+    text-align: left;
+    flex: 0;
+    max-width: 400px;
+}
+
+#testWrapper {
+    display: flex;
+    flex-direction: column;
+
+    flex: auto;
+    height: 100vh;
+}
+
+#testSettingsWrapper {
+    border: 1px solid rgba(255, 0, 0, 0.341);
+
+    text-align: left;
+    background-color: #333333;
+    flex: 1;
+}
+
+#testResultWrapper {
+    border: 1px solid rgba(255, 0, 0, 0.341);
+
+    text-align: left;
+    background-color: #333333;
+    height: 280px;
+}
+
+/*  elements shared  */
+.sectionTitle {}
+
+.listBase {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*  elements  */
+#projectsList {
+    border: 1px solid rgba(255, 0, 0, 0.341);
+
+}
+
+.projectsListItem {
+    border: 3px solid rgba(255, 255, 255, 0.158);
+    border-radius: 10px;
+}
+
+#testCasesView {}
+
+.testCasesViewItem {
+    display: inline-block;
+    border: 1px solid rgba(255, 0, 0, 0.341);
+    margin: 5px;
+}
+
+#testResult {
+    background-color: #333333b4;
+    font-size: 12px;
+}
+
+.testResP {
+    margin-block: 0;
+}
