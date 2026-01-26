@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { AddTestCase, GetTestCases, ClearTestCases, MakeRequest } from "../wailsjs/go/main/App";
+import { AddTestCase, GetTestCases, ClearTestCases, ExecuteStoredTests, ExecuteTestsWithId } from "../wailsjs/go/main/App";
 import type { main } from '../wailsjs/go/models';
 
 function App() {
@@ -9,12 +9,12 @@ function App() {
         Headers: {},
         Body: {},
         QueryParams: {},
-        APIResponse: null,
+        APIResponse: {},
         Method: "",
         Url: "",
         Id: 0
     });
-    const [testResultLog, setTestResultLog] = useState<{ts: Date, result: string}[]>([]);
+    const [testResultLog, setTestResultLog] = useState<{ts: Date, testId: number, result: string}[]>([]);
     const [resultText, setResultText] = useState("URL to test");
 
     function updateURLInput(e: any){
@@ -49,7 +49,7 @@ function App() {
             Headers: {},
             Body: {},
             QueryParams: {},
-            APIResponse: null,
+            APIResponse: {},
             Method: "",
             Url: "",
             Id: 0
@@ -57,23 +57,24 @@ function App() {
         setResultText("tests cleared");
     }
     
-    async function handleRunTests(){
+    async function handleRunTests(id: number){
         try{
-            const result = await MakeRequest(
-                testData.Url,
-                testData.Method,
-                {"Content-Type": "application/json"},
-                {"username": "JohnDoe"},
-                {"sort": "desc"}
-            );
-            setTestResultLog([{ts: new Date(), result: result}, ...testResultLog]);
-            console.log(result)
-        } catch(err){
-            setTestResultLog([{ts: new Date(), result: err.toString()}, ...testResultLog]);
-            console.log(err)
+            await ExecuteTestsWithId(id-1);
+            await handleGetTestCases();
+            console.log(testCases)
+            //setTestResultLog([{ts: new Date(), result: result.message}, ...testResultLog]);
+            
+            console.log("ran a test with id", "0")
+        } catch(err: any){
+            setTestResultLog([{ts: new Date(), testId: -1, result: err.message}, ...testResultLog]);
+            console.log("HIBA!", err);
         }
     }
 
+    async function handleExecuteStoredTests(){
+        await ExecuteStoredTests();
+        await handleGetTestCases();
+    }
     return (
         <div id="App">
             <div id="projectsWrapper" className="sectionBase">
@@ -87,26 +88,28 @@ function App() {
             </div>
             <div id="testWrapper">
                 <div id="testSettingsWrapper" className="sectionBase">
-                    <h2 className="sectionTitle">test settings</h2>
-                    <div id="result">{resultText}</div>
                     <div id="input" className="input-box">
+                        <h2 className="sectionTitle">test settings</h2>
+                        <div id="result">{resultText}</div>
                         <input id="name" className="input" value={testData.Url} onChange={updateURLInput} autoComplete="off" name="Url" type="text"/>
                         <input id="url" className="input" value={testData.Method} onChange={updateURLInput} autoComplete="off" name="Method" type="text"/>
                         <button className="btn" onClick={handleSetTestCase}>set url</button>
-                        <button className="btn" onClick={handleRunTests}>quick run</button>
-                        <button className="btn" onClick={handleClearTestCases}>clear all</button>
                     </div>
                     <div id="testCasesView">
                     {testCases.length > 0 ? (
                         testCases.map( testCase => (
-                        <span className="testCasesViewItem" key={testCase.Id}>
-                            {testCase.Id}: {testCase.Url}<br/>{testCase.Method}
-                            <button onClick={console.log}>exec</button>
+                        <span className={"testCasesViewItem "} key={testCase.Id}>
+                            {testCase.Id}: {testCase.Url}<br/>{testCase.Method}<br/>{testCase.APIResponse["message"] || testCase.APIResponse["error"] || "no result"}
+                            <button data-case-id={testCase.Id} onClick={()=>handleRunTests(testCase.Id)}>exec</button>
                         </span>
                         ))
                     ) : (
                         <p>No test cases yet</p>
                     )}
+                    </div>
+                    <div id="testControls">
+                        <button className="btn" onClick={handleExecuteStoredTests}>run all</button>
+                        <button className="btn" onClick={handleClearTestCases}>clear all</button>
                     </div>
                 </div>
                 <div id="testResultWrapper" className="sectionBase">

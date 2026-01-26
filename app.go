@@ -31,13 +31,14 @@ func (a *App) startup(ctx context.Context) {
 
 // slice to store the user defined api test cases
 var testCasesSlice = make([]TestCase, 0)
+var testCaseResults = make([]any, 0)
 var lastTestCaseIndex = 0
 
 type Headers map[string]string
 type Body map[string]any
 type QueryParams map[string]any
 
-type APIResponse any
+type APIResponse map[string]any
 
 type TestCase struct {
 	Headers Headers
@@ -56,12 +57,13 @@ func (a *App) AddTestCase(data TestCase) TestCase {
 	
 	testCasesSlice = append(testCasesSlice, data)
 	
-	fmt.Println(testCasesSlice)
+	fmt.Println("CURRENT test cases", testCasesSlice)
 	return data
 }
 // exported method for geting the whole test cases slice
-func (a *App) GetTestCases() []TestCase {
-	return testCasesSlice
+func (a *App) GetTestCases() *[]TestCase {
+	fmt.Println("ALL test cases", &testCaseResults)
+	return &testCasesSlice
 }
 
 // exported method for clearing all defined test cases
@@ -77,7 +79,7 @@ var client = &http.Client{
 }
 
 // abstracted handler | TODO: refactor
-func DoRequest(ctx context.Context, method, urlStr string, headers, queryParams map[string]string, payload any, response any) error {
+func DoRequest(ctx context.Context, method, urlStr string, headers Headers, queryParams QueryParams, payload any, response any) error {
 	var body io.Reader
 	if payload != nil {
 		jsonData, err := json.Marshal(payload)
@@ -93,7 +95,7 @@ func DoRequest(ctx context.Context, method, urlStr string, headers, queryParams 
 	}
 	q := u.Query()
 	for k, v := range queryParams {
-		q.Set(k, v)
+		q.Set(k, v.(string))
 	}
 	u.RawQuery = q.Encode()
 
@@ -110,6 +112,7 @@ func DoRequest(ctx context.Context, method, urlStr string, headers, queryParams 
 		req.Header.Set("Content-Type", "application/json")
 	}
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("X-Request-ID", "mock_reqest_id_12345")
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -131,24 +134,61 @@ func DoRequest(ctx context.Context, method, urlStr string, headers, queryParams 
 	return nil
 }
 
-// exported method for calling adhoc http requests
-func (a *App) MakeRequest(url string, method string, headers map[string]string, body map[string]any, queryParams map[string]any) (string) {
+func (a *App) ExecuteStoredTests() error {
+	cases := a.GetTestCases()
+
+	for i, c := range *cases {
+		fmt.Println("Case index:", i, "Case:", c.Id, " ", c.Method, " ", c.Url)
+		RunATest(&testCasesSlice[i])
+	}
+
+	return nil
+}
+
+func (a *App) ExecuteTestsWithId(id int) {
+	cases := a.GetTestCases()
+	
+	var selectedCase *TestCase
+
+	for index, _ := range *cases {
+		if index == id {
+			selectedCase = &testCasesSlice[index]
+		}
+	}
+	if selectedCase == nil {
+		fmt.Println("selectedCase is nil!")
+		return
+	}
+	RunATest(selectedCase);
+	fmt.Println("SELECTED case", selectedCase)
+	return
+}
+
+func RunATest(t *TestCase) {
+	// DoRequest(ctx context.Context, method, urlStr string, headers, queryParams map[string]string, payload any, response any) error
+
+	url := t.Url
+	method := t.Method
+	headers := t.Headers
+	//body := t.Body
+	queryParams := t.QueryParams
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	switch method {
 	case "GET":
-		var getResult map[string]any
+		var getResult APIResponse
 		err := DoRequest(ctx, http.MethodGet, url, 
-			map[string]string{"Authorization": "Bearer token"}, 
-			map[string]string{"id": "123", "sort": "desc"}, 
+			headers, //map[string]string{"Authorization": "Bearer token"}, 
+			queryParams, //map[string]string{"id": "123", "sort": "desc"}, 
 			nil, &getResult)
 		if err != nil {
 			fmt.Println("error:", err)
-			return fmt.Sprint("error during" + method + "request")
+			t.APIResponse = map[string]any{ "error": fmt.Errorf("error during" + method + "request")}
 		}
 		fmt.Printf("GET response: %+v\n", getResult)
-		return fmt.Sprint("GET response: %+v\n", getResult)
+		t.APIResponse = getResult
 
 	case "POST", "PUT":
 		type User struct {
@@ -156,32 +196,30 @@ func (a *App) MakeRequest(url string, method string, headers map[string]string, 
 			Email string `json:"email"`
 		}
 		payload := User{Name: "Kiss Márton", Email: "marton@example.com"}
-		var postResult map[string]any
-		err := DoRequest(ctx, http.MethodPost, url, 
-			map[string]string{"Content-Type": "application/json"}, 
-			nil, payload, &postResult)
+		var postResult APIResponse
+		err := DoRequest(ctx, http.MethodPost, url,
+			headers,
+			nil,
+			payload, &postResult)
 		if err != nil {
 			fmt.Println("error:", err)
-			return fmt.Sprint("error during" + method + "request")
+			t.APIResponse = map[string]any{ "error": fmt.Errorf("error during" + method + "request")}
 		}
 		fmt.Printf("POST response: %+v\n", postResult)
-		return fmt.Sprint("POST response: %+v\n", postResult)
+		t.APIResponse = postResult
 
 	case "DELETE":
 		err := DoRequest(ctx, http.MethodDelete, url, 
-			map[string]string{"Authorization": "Bearer token"}, 
+			headers, //map[string]string{"Authorization": "Bearer token"}, 
 			nil, nil, nil)
 		if err != nil {
 			fmt.Println("error:", err)
-			return fmt.Sprint("error during" + method + "request")
+			t.APIResponse = map[string]any{ "error": fmt.Errorf("error during" + method + "request")}
 		}
 		fmt.Printf("DELETE success\n")
-		return fmt.Sprint("DELETE success\n")
+		t.APIResponse = map[string]any{"success": "DELETE success"}
 	default:
 		fmt.Println("error, method mismatch")
-		return fmt.Sprint("error, method mismatch")
+		t.APIResponse = map[string]any{ "error": "error, method mismatch"}
 	}
-
 }
-
-// TODO: implement automatic test function, that is iterating through testCasesSlice
