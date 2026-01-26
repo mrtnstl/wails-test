@@ -10,10 +10,14 @@ export function ClearTestCases() {
   return window['go']['main']['App']['ClearTestCases']();
 }
 
-export function GetTestCases() {
-  return window['go']['main']['App']['GetTestCases']();
+export function ExecuteStoredTests() {
+  return window['go']['main']['App']['ExecuteStoredTests']();
 }
 
-export function MakeRequest(arg1, arg2, arg3, arg4, arg5) {
-  return window['go']['main']['App']['MakeRequest'](arg1, arg2, arg3, arg4, arg5);
+export function ExecuteTestsWithId(arg1) {
+  return window['go']['main']['App']['ExecuteTestsWithId'](arg1);
+}
+
+export function GetTestCases() {
+  return window['go']['main']['App']['GetTestCases']();
 }

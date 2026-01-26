@@ -4,7 +4,7 @@ export namespace main {
 	    Headers: Record<string, string>;
 	    Body: Record<string, any>;
 	    QueryParams: Record<string, any>;
-	    APIResponse: any;
+	    APIResponse: Record<string, any>;
 	    Method: string;
 	    Url: string;
 	    Id: number;
