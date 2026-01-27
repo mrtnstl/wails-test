@@ -8,3 +8,8 @@ https://dev.to/kaizerpwn/building-desktop-apps-with-wails-a-go-developers-perspe
 
 And the docs
 https://wails.io/
+
+
+## Screens
+
+![Screens](https://github.com/mrtnstl/wails-test/blob/main/docs/screens.png "Screens")
