@@ -2,11 +2,68 @@ import express from "express";
 import crypro from "node:crypto";
 
 const MOCK_DB = {
-    Users: [
-        {id: "", name: "", eamil: ""},
-    ],
+    Users: [],
     Books: [
-        {id: "bid_001", title: "Book Title", description: "Book Description", pages: -1}
+        {
+            id: "bid_001",
+            title: "Clean Code: A Handbook of Agile Software Craftsmanship",
+            description: "Robert C. Martin klasszikusa a tiszta, olvasható és fenntartható kód írásáról.",
+            pages: 431
+        },
+        {
+            id: "bid_002",
+            title: "The Pragmatic Programmer: Your Journey to Mastery",
+            description: "Andrew Hunt és David Thomas gyakorlati tanácsai a jobb programozóvá váláshoz.",
+            pages: 352
+        },
+        {
+            id: "bid_003",
+            title: "Designing Data-Intensive Applications",
+            description: "Martin Kleppmann mélyreható könyv adatbázisokról, elosztott rendszerekről és skálázhatóságról.",
+            pages: 611
+        },
+        {
+            id: "bid_004",
+            title: "JavaScript: The Good Parts",
+            description: "Douglas Crockford rövid, de nagyon lényegre törő könyve a JavaScript legjobb részeiről.",
+            pages: 153
+        },
+        {
+            id: "bid_005",
+            title: "You Don't Know JS Yet: Scope & Closures",
+            description: "Kyle Simpson sorozatának első kötete a JavaScript scope és closure mechanizmusairól.",
+            pages: 98
+        },
+        {
+            id: "bid_006",
+            title: "Eloquent JavaScript: A Modern Introduction to Programming",
+            description: "Marijn Haverbeke ingyenesen is elérhető modern JavaScript bevezető könyve.",
+            pages: 472
+        },
+        {
+            id: "bid_007",
+            title: "Refactoring: Improving the Design of Existing Code",
+            description: "Martin Fowler klasszikusa a meglévő kód átdolgozásáról és javításáról (2. kiadás).",
+            pages: 431
+        },
+        {
+            id: "bid_008",
+            title: "Domain-Driven Design: Tackling Complexity in the Heart of Software",
+            description: "Eric Evans alapmű a domain-driven design filozófiájáról és gyakorlatáról.",
+            pages: 560
+        },
+        {
+            id: "bid_009",
+            title: "Introduction to Algorithms",
+            description: "CLRS (Cormen, Leiserson, Rivest, Stein) – az algoritmusok „bibliája”.",
+            pages: 1312
+        },
+        {
+            id: "bid_010",
+            title: "Grokking Algorithms",
+            description: "Aditya Bhargava nagyon szemléletes, illusztrált bevezető az algoritmusok világába.",
+            pages: 256
+        }
     ]
 }
 
