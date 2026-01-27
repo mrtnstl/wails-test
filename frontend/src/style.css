@@ -50,6 +50,17 @@ button {}
 #root {
     height: 100vh;
     display: flex;
+    flex-direction: column;
+}
+
+.app__header {
+    cursor: pointer;
+}
+
+.App {
+    flex: 1;
+    display: flex;
+
 }
 
 #settings__wrapper {

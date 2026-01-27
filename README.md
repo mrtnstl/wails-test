@@ -13,3 +13,7 @@ https://wails.io/
 ## Screens
 
 ![Screens](https://github.com/mrtnstl/wails-test/blob/main/docs/screens.png "Screens")
+
+## Architectural Considerations
+
+TOOD: research

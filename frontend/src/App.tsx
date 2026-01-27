@@ -79,8 +79,12 @@ function App() {
     function ViewStateMachine(currentState: ViewState, nextState: ViewState){
         const stateChangeMap = {
             "main": ["edit", "settings"],
-            "edit": "main",
-            "settings": "main"
+            "edit": ["main"],
+            "settings": ["main"]
+        }
+        if(!stateChangeMap[currentState].includes(nextState)){
+            console.log("illegal state change!!!");
+            return;
         }
         setViewState(nextState);
     }
@@ -92,29 +96,41 @@ function App() {
         case "main":
             return (
                 <>
-                    <Projects handleViewChange={handleViewChange} />
-                    <TestBoard handleViewChange={handleViewChange}/>
+                    <div style={{widows: "1"}} className="app__header">header</div>
+                    <div className="App">
+                        <Projects handleViewChange={handleViewChange} />
+                        <TestBoard handleViewChange={handleViewChange}/>
+                    </div>
                 </>
             )
         case "edit":
             return (
                 <>
-                    <EditTestCase handleViewChange={handleViewChange}/>
-                    <TestBoard handleViewChange={handleViewChange}/>
+                    <div style={{widows: "1"}} className="app__header">header</div>
+                    <div className="App">
+                        <EditTestCase handleViewChange={handleViewChange}/>
+                        <TestBoard handleViewChange={handleViewChange}/>
+                    </div>
                 </>
             )
         case "settings":
             return (
                 <>
-                    <Settings handleViewChange={handleViewChange}/>
-                    <TestBoard handleViewChange={handleViewChange}/>
+                    <div style={{widows: "1"}} className="app__header">header</div>
+                    <div className="App">
+                        <Settings handleViewChange={handleViewChange}/>
+                        <TestBoard handleViewChange={handleViewChange}/>
+                    </div>
                 </>
             )
         default:
             return (
                 <>
-                    <Projects handleViewChange={handleViewChange}/>
-                    <TestBoard handleViewChange={handleViewChange}/>
+                    <div style={{widows: "1"}} className="app__header">header</div>
+                    <div className="App">
+                        <Projects handleViewChange={handleViewChange}/>
+                        <TestBoard handleViewChange={handleViewChange}/>
+                    </div>
                 </>
             )
     }   
