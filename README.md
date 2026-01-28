@@ -16,4 +16,47 @@ https://wails.io/
 
 ## Architectural Considerations
 
-TOOD: research
+currently:
+
+```
+src/
+├── build/                 # binaries
+|   ├── darwin/            #
+|   ├── windows/           #
+├── docs/                  # documentations
+├── frontend/              # View layer (React app)
+│   ├── cascade.rs         # 
+│   ├── properties.rs      # 
+│   └── values.rs          # 
+├── .gitignore             # 
+├── REAMDE.md              # project description
+├── app.go                 # currently all logic resides here (REFACTOR)
+├── go.mod                 # application dependencies
+├── go.sum                 # 
+├── main.go                # application entrypoint
+└── wails.json             # wails framework config
+```
+
+will do something like this:
+
+```
+src/
+├── backend/               # golang backend implementation
+|   ├── app.go             # 
+|   ├── controller/        #
+|   ├── service/           #
+|   ├── util/              #
+├── build/                 # binaries
+|   ├── darwin/            #
+|   ├── windows/           #
+├── docs/                  # documentations
+├── frontend/              # View layer (React app)
+│   ├── src/               # 
+│   └── wailsjs            # 
+├── .gitignore             # 
+├── REAMDE.md              # project description
+├── go.mod                 # application dependencies
+├── go.sum                 # 
+├── main.go                # application entrypoint
+└── wails.json             # wails framework config
+```
