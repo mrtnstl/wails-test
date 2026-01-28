@@ -29,23 +29,23 @@ will do something like this:
 
 ```
 src/
-├── backend/                # golang backend implementation
+├── backend/                # backend/logic (golang)
 |   ├── app.go              # 
 |   ├── storage/            #
-│   |   └── sqlite.go       # sqlite database for project and settings persistence
-|   └── apiTesting/         #
-|       ├── runner.go       #
-|       ├── projects.go     #
-│       └── tests.go        #
+│   |   └── sqlite.go       # sqlite database for projects, tests and settings persistence
+|   └── suite/              #
+|       ├── runner.go       # test runner
+|       ├── projects.go     # user projects
+│       └── tests.go        # user tests
 ├── build/                  # binaries
 |   ├── darwin/             #
-|   ├── windows/            #
-├── docs/                   # documentations
-├── frontend/               # View layer (React app)
+|   └── windows/            #
+├── docs/                   # documentation
+├── frontend/               # view layer (React app)
 │   ├── src/                # 
 │   └── wailsjs             # 
 ├── .gitignore              # 
-├── REAMDE.md               # project description
+├── REAMDE.md               # application description
 ├── go.mod                  # application dependencies
 ├── go.sum                  # 
 ├── main.go                 # application entrypoint
