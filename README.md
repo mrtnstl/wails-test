@@ -29,8 +29,10 @@ will do something like this:
 
 ```
 src/
+├── cmd/                    # 
+|   └── app.go              #
 ├── backend/                # backend/logic (golang)
-|   ├── app.go              # 
+|   ├── types/              # (???)
 |   ├── storage/            #
 │   |   └── sqlite.go       # sqlite database for projects, tests and settings persistence
 |   └── suite/              #
