@@ -1,0 +1,52 @@
+{
+    "projects": [
+        {
+            "name": "my test project",
+            "id": "0001",
+            "testFlow": [
+                {
+                    "caseId": "case01",
+                    "caseSettings": {
+                        "url": "",
+                        "method": "",
+                        "headers": {},
+                        "query": {},
+                        "body": {}
+                    },
+                    "caseResult": {
+                        "statusCode": 200,
+                        "responseBody": {}
+                    }
+                },
+                {
+                    "caseId": "case02",
+                    "caseSettings": {
+                        "url": "",
+                        "method": "",
+                        "headers": {},
+                        "query": {},
+                        "body": {}
+                    },
+                    "caseResult": {
+                        "statusCode": 200,
+                        "responseBody": {}
+                    }
+                },
+                {
+                    "caseId": "case03",
+                    "caseSettings": {
+                        "url": "",
+                        "method": "",
+                        "headers": {},
+                        "query": {},
+                        "body": {}
+                    },
+                    "caseResult": {
+                        "statusCode": 200,
+                        "responseBody": {}
+                    }
+                }
+            ]
+        }
+    ]
+}

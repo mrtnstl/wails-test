@@ -25,7 +25,7 @@ https://wails.io/
 
 ## Architectural Considerations
 
-will do something like this:
+will look like something like this:
 
 ```
 src/
@@ -34,14 +34,15 @@ src/
 ├── backend/                # backend/logic (golang)
 |   ├── types/              # (???)
 |   ├── storage/            #
-│   |   └── sqlite.go       # sqlite database for projects, tests and settings persistence
+│   |   ├── sqlite.go       # sqlite database for projects, tests and settings persistence
+|   |   └── fileWriter.go   # file writer for projects, tests and settings persistence
 |   └── suite/              #
 |       ├── runner.go       # test runner
 |       ├── projects.go     # user projects
 │       └── tests.go        # user tests
-├── build/                  # binaries
-|   ├── darwin/             #
-|   └── windows/            #
+├── build/                  # 
+|   ├── darwin/             # mac binaries
+|   └── windows/            # windows binaries
 ├── docs/                   # documentation
 ├── frontend/               # view layer (React app)
 │   ├── src/                # 
@@ -53,3 +54,9 @@ src/
 ├── main.go                 # application entrypoint
 └── wails.json              # wails framework config
 ```
+
+
+## 
+
+on linux if 'wails doctor: libwebkit not found', install libwebkit2gtk-4.1-dev
+during dev and build, use flag '-tags webkit2_41'
