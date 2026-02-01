@@ -31,15 +31,15 @@ will look like something like this:
 src/
 ├── cmd/                    # 
 |   └── app.go              #
-├── backend/                # backend/logic (golang)
+├── internals/              # backend/logic (golang)
 |   ├── types/              # (???)
 |   ├── storage/            #
 │   |   ├── sqlite.go       # sqlite database for projects, tests and settings persistence
 |   |   └── fileWriter.go   # file writer for projects, tests and settings persistence
 |   └── suite/              #
 |       ├── runner.go       # test runner
-|       ├── projects.go     # user projects
-│       └── tests.go        # user tests
+|       ├── project.go     # user projects
+│       └── testCase.go        # user tests
 ├── build/                  # 
 |   ├── darwin/             # mac binaries
 |   └── windows/            # windows binaries
