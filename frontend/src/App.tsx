@@ -119,7 +119,7 @@ function App() {
                     <div style={{widows: "1"}} className="app__header">header</div>
                     <div className="App">
                         <Settings handleViewChange={handleViewChange}/>
-                        <TestBoard handleViewChange={handleViewChange}/>
+                        {/*<TestBoard handleViewChange={handleViewChange}/>*/}
                     </div>
                 </>
             )

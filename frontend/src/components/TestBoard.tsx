@@ -6,7 +6,7 @@ export const TestBoard = (children: {handleViewChange: (nextState: ViewState)=>v
     <div id="testboard__wrapper" className="component">
         <h2>project_01</h2>
         <ul id="testboard__board">
-            <li className="test__item" onClick={()=>handleViewChange("edit")}>+</li>
+            <li className="test__item test_item--add" onClick={()=>handleViewChange("edit")}>+</li>
         </ul>
         <div>
             <button>run</button>

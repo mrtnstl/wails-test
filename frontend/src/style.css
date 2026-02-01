@@ -65,6 +65,8 @@ button {}
 
 #settings__wrapper {
     border: 1px solid brown;
+
+    width: 100%;
 }
 
 #testboard__wrapper {
@@ -89,6 +91,15 @@ button {}
     height: 80px;
     align-content: center;
     text-align: center;
+}
+
+.test_item--add {
+    transition: font-size 100ms ease-in-out;
+    cursor: pointer;
+}
+
+.test_item--add:hover {
+    font-size: 36px;
 }
 
 #projects__wrapper {
