@@ -22,4 +22,4 @@ SELECT * FROM test_cases WHERE project_id = ?; -- get all cases
 SELECT * FROM test_cases WHERE id = ?; -- get one case
 UPDATE test_cases WHERE id = ? SET case_settings = ?; -- update case settings
 UPDATE test_cases WHERE id = ? SET case_result = ?; -- update case result
-DELETE FROM test_cases WHERE id = ?; -- dedlete case
+DELETE FROM test_cases WHERE id = ?; -- delete case
