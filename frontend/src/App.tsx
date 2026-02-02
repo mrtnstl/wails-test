@@ -96,7 +96,7 @@ function App() {
         case "main":
             return (
                 <>
-                    <div style={{widows: "1"}} className="app__header">header</div>
+                    <div style={{widows: "1"}} className="app__header">api-testing-platform</div>
                     <div className="App">
                         <Projects handleViewChange={handleViewChange} />
                         <TestBoard handleViewChange={handleViewChange}/>
@@ -106,7 +106,7 @@ function App() {
         case "edit":
             return (
                 <>
-                    <div style={{widows: "1"}} className="app__header">header</div>
+                    <div style={{widows: "1"}} className="app__header">api-testing-platform</div>
                     <div className="App">
                         <EditTestCase handleViewChange={handleViewChange}/>
                         <TestBoard handleViewChange={handleViewChange}/>
@@ -116,7 +116,7 @@ function App() {
         case "settings":
             return (
                 <>
-                    <div style={{widows: "1"}} className="app__header">header</div>
+                    <div style={{widows: "1"}} className="app__header">api-testing-platform</div>
                     <div className="App">
                         <Settings handleViewChange={handleViewChange}/>
                         {/*<TestBoard handleViewChange={handleViewChange}/>*/}
@@ -126,7 +126,7 @@ function App() {
         default:
             return (
                 <>
-                    <div style={{widows: "1"}} className="app__header">header</div>
+                    <div style={{widows: "1"}} className="app__header">api-testing-platform</div>
                     <div className="App">
                         <Projects handleViewChange={handleViewChange}/>
                         <TestBoard handleViewChange={handleViewChange}/>

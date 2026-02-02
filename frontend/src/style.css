@@ -4,15 +4,20 @@
     box-sizing: border-box;
 }
 
-html {
-    background-color: rgba(27, 38, 54, 1);
-    text-align: center;
-    color: white;
+:root {
+    --color-black: rgb(34, 40, 49);
+    --color-gray: rgb(57, 62, 70);
+    --color-brown: rgb(148, 137, 121);
+    --color-beige: rgb(223, 208, 184);
 }
 
+html {}
+
 body {
+    text-align: center;
+    background-color: var(--color-black);
     margin: 0;
-    color: white;
+    color: var(--color-beige);
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
         sans-serif;
@@ -64,16 +69,18 @@ button {}
 }
 
 #settings__wrapper {
-    border: 1px solid brown;
+    border: 1px solid var(--color-brown);
 
+    text-align: left;
     width: 100%;
 }
 
 #testboard__wrapper {
-    border: 1px solid brown;
+    border: 1px solid var(--color-brown);
 
     flex: 1;
     text-align: left;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
 }
@@ -85,7 +92,7 @@ button {}
 
 .test__item {
 
-    border: 4px solid grey;
+    border: 4px solid var(--color-brown);
     border-radius: 20px;
     width: 80px;
     height: 80px;
@@ -103,7 +110,7 @@ button {}
 }
 
 #projects__wrapper {
-    border: 1px solid brown;
+    border: 1px solid var(--color-brown);
 
     text-align: left;
     overflow-y: auto;
@@ -117,5 +124,68 @@ button {}
 }
 
 #edittestcase__wrapper {
-    border: 1px solid brown;
+    border: 1px solid var(--color-brown);
+    display: flex;
+    flex-direction: column;
+}
+
+#edittestcase__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#edit__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__section {}
+
+#edit__form__method__url {
+    display: flex;
+
+}
+
+#select__method {}
+
+#input__url {
+    flex: 1;
+}
+
+#edit__form__attributes {
+    display: flex;
+    flex-direction: column;
+}
+
+#button__group__fieldtype {
+    display: block;
+}
+
+#inputs__fieldtype {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    border: 3px solid var(--color-brown);
+
+    padding: 0;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.input__keyvalue {
+    border: 0;
+}
+
+.input__keyvalue>input {
+    padding: 4px 6px;
+    margin: 0;
+    border: none;
+
+    background-color: var(--color-gray);
+    color: var(--color-beige);
+}
+
+.input__keyvalue:not(:last-child) {
+    border-bottom: 1px solid var(--color-brown);
 }
